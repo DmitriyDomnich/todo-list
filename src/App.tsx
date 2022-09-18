@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import TodoList from './components/TodoList';
+import TodoSettings from './components/TodoSettings';
+import type { TodoItemsSort } from './models/TodoItem';
+import { TodoItemStatus } from './models/TodoItemStatus';
 
 function App() {
+  const [filter, setFilter] = useState<TodoItemStatus | ''>('');
+  const [todoSortOptions, setTodoSortOptions] = useState<TodoItemsSort>({
+    isAsc: false,
+    sortField: '',
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='min-h-[100vh] p-5 bg-slate-200 flex items-center justify-center'>
+      <div className='w-full lg:w-3/4 max-h-[955px] flex flex-col'>
+        <TodoSettings
+          filter={filter}
+          todoSortOptions={todoSortOptions}
+          setFilter={setFilter}
+          setSortOptions={setTodoSortOptions}
+        />
+        <TodoList filterStatus={filter} todoSortOptions={todoSortOptions} />
+      </div>
     </div>
   );
 }
